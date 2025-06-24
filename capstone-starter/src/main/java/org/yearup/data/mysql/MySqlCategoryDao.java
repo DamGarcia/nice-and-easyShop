@@ -31,7 +31,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         // query to search for the desired data
         String query = """
                 select category_id, name, description
-                from easyshop.categories c ;
+                from categories;
                 """;
     
         // connect to the database to retrieve the data
