@@ -96,11 +96,21 @@ public class CategoriesController
     @PutMapping("{id}")
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+        // update the category by id
     public void updateCategory(@PathVariable int id, @RequestBody Category category)
     {
-        // update the category by id
         try{
+            if(id <= 0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid category ID");
+            }
+            
+            if(categoryDao.getById(id) == null){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found");
+            }
+            
             categoryDao.update(id, category);
+            
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }

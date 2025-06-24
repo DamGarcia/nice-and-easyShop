@@ -77,10 +77,18 @@ public class ProductsController
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@PathVariable int id, @RequestBody Product product)
     {
         try
         {
+            if(id <= 0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product ID");
+            }
+            if(productDao.getById(id) == null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+            }
+
             productDao.update(id, product);
         }
         catch(Exception ex)

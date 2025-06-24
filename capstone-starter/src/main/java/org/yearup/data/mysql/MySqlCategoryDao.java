@@ -123,7 +123,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 set category_id = ?
                 set name = ?
                 set description = ?
-                where category_id = 1;
+                where category_id = ?;
                 """;
         
         try(Connection c = getConnection();
@@ -132,6 +132,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             s.setInt(1, category.getCategoryId());
             s.setString(2, category.getName());
             s.setString(3, category.getDescription());
+            s.setInt(4, categoryId);
             
             s.executeUpdate();
             
