@@ -61,8 +61,8 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     {
         String query = """
                 select category_id, name, description
-                from easyshop.categories c
-                where c.category_id = ?;
+                from categories
+                where category_id = ?;
                 """;
         
         try(Connection c = getConnection();
@@ -87,7 +87,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     public Category create(Category category)
     {
         String insertQuery = """
-                insert into easyshop.categories (name, description)
+                insert into categories (name, description)
                 values (?, ?);
                 """;
         
@@ -119,11 +119,11 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     public void update(int categoryId, Category category)
     {
         String updateQuery = """
-                update easyshop.categories c
+                update categories
                 set category_id = ?
                 set name = ?
                 set description = ?
-                where c.category_id = 1;
+                where category_id = 1;
                 """;
         
         try(Connection c = getConnection();
@@ -145,7 +145,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     public void delete(int categoryId)
     {
         String deleteQuery = """
-                delete from easyshop.categories c
+                delete from categories
                 where category_id = ?;
                 """;
         
