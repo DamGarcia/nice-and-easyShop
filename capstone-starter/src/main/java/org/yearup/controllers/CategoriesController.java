@@ -15,7 +15,7 @@ import java.util.List;
 // add the annotations to make this a REST controller
 @RestController
 // add the annotation to make this controller the endpoint for the following url
-    // http://localhost:8080/categories
+// http://localhost:8080/categories
 @RequestMapping("categories")
 // add annotation to allow cross site origin requests
 @CrossOrigin
@@ -31,8 +31,8 @@ public class CategoriesController
         this.productDao = productDao;
     }
 
-    // add the appropriate annotation for a get action
     @GetMapping("")
+    // add the appropriate annotation for a get action
     @PreAuthorize("permitAll()")
     public List<Category> getAll()
     {
@@ -40,8 +40,8 @@ public class CategoriesController
         return categoryDao.getAllCategories();
     }
 
-    // add the appropriate annotation for a get action
     @GetMapping("{id}")
+    // add the appropriate annotation for a get action
     @PreAuthorize("permitAll()")
     // get the category by id
     public Category getById(@PathVariable int id)
