@@ -120,19 +120,17 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     {
         String updateQuery = """
                 update categories
-                set category_id = ?
-                set name = ?
-                set description = ?
+                set name = ?,
+                description = ?
                 where category_id = ?;
                 """;
         
         try(Connection c = getConnection();
         PreparedStatement s = c.prepareStatement(updateQuery))
         {
-            s.setInt(1, category.getCategoryId());
-            s.setString(2, category.getName());
-            s.setString(3, category.getDescription());
-            s.setInt(4, categoryId);
+            s.setString(1, category.getName());
+            s.setString(2, category.getDescription());
+            s.setInt(3, categoryId);
             
             s.executeUpdate();
             

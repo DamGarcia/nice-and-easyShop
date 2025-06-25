@@ -163,6 +163,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
                 update products
                 set name = ?,
                 price = ?,
+                category_id = ?,
                 description = ?,
                 color = ?,
                 image_url = ?,
@@ -176,12 +177,13 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, product.getPrice());
-            statement.setString(3, product.getDescription());
-            statement.setString(4, product.getColor());
-            statement.setString(5, product.getImageUrl());
-            statement.setInt(6, product.getStock());
-            statement.setBoolean(7, product.isFeatured());
-            statement.setInt(8, productId);
+            statement.setInt(3, product.getCategoryId());
+            statement.setString(4, product.getDescription());
+            statement.setString(5, product.getColor());
+            statement.setString(6, product.getImageUrl());
+            statement.setInt(7, product.getStock());
+            statement.setBoolean(8, product.isFeatured());
+            statement.setInt(9, productId);
 
             statement.executeUpdate();
         }

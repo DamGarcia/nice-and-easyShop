@@ -104,13 +104,13 @@ public class CategoriesController
             if(id <= 0){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid category ID");
             }
-            
+
             if(categoryDao.getById(id) == null){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found");
             }
-            
+
             categoryDao.update(id, category);
-            
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
