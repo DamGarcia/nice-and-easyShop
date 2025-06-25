@@ -43,8 +43,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
                 Product product = mapRow(row);
                 ShoppingCartItem item = new ShoppingCartItem();
                 item.setProduct(product);
-                item.setQuantity(1);
-                
+                item.setQuantity(row.getInt("quantity"));
+
                 shoppingCart.add(item);
             }
             
@@ -54,13 +54,13 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
-    public void addProduct(int userId, int productId) {
+    public void create(int userId, int productId) {
         
         String insertQuery = """
-                insert into shopping_cart (user_id, product_id, quantity)
-                values (?, ?, ?)
+                insert into shopping_cart (user_id, product_id)
+                values (?, ?)
                 on duplicate key update quantity = quantity + 1;
                 """;
         
@@ -69,7 +69,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         {
             s.setInt(1, userId);
             s.setInt(2, productId);
-            s.setInt(3, 1);
+            
             s.executeUpdate();
             
         } catch (SQLException e) {
@@ -78,11 +78,11 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
     
     @Override
-    public void updateProduct(int userId, ShoppingCartItem item) {
+    public void update(int userId, ShoppingCartItem item) {
         String updateQuery = """
                 update shopping_cart
                 set quantity = ?
-                where user_id = ? and product_id = ?
+                where user_id = ? and product_id = ?;
                 """;
         
         try(Connection c = getConnection();
@@ -100,7 +100,9 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public void clearCart(int userId) {
+    public ShoppingCart delete(int userId) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        
         String deleteQuery = """
                 delete from shopping_cart
                 where user_id = ?;
@@ -113,11 +115,15 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             
             s.executeUpdate();
 
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        return shoppingCart;
     }
 
+    // helper methods
     protected static Product mapRow(ResultSet row) throws SQLException
     {
         int productId = row.getInt("product_id");

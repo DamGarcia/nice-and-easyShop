@@ -1,6 +1,5 @@
 package org.yearup.data.mysql;
 
-import org.apache.ibatis.annotations.Results;
 import org.springframework.stereotype.Component;
 import org.yearup.data.CategoryDao;
 import org.yearup.models.Category;
