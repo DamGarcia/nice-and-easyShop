@@ -3,9 +3,13 @@ package org.yearup.data.mysql;
 import org.springframework.stereotype.Component;
 import org.yearup.data.OrderDao;
 import org.yearup.models.Order;
+import org.yearup.models.OrderLineItem;
+
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
@@ -16,8 +20,10 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
     public Order getByUserId(int userId) {
         Order order = new Order();
         String query = """
-                select * from orders
-                where user_id = ?;
+                select o.*, oli.*
+                from orders o
+                join order_line_items oli on o.order_id = oli.order_id
+                where o.user_id = ?;
                 """;
         
         try(Connection c = getConnection();
@@ -133,6 +139,8 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
             String state = row.getString("state");
             String zip = row.getString("zip");
             BigDecimal shippingAmount = row.getBigDecimal("shipping_amount");
+            List<OrderLineItem> items = new ArrayList<>();
+            
             
             return new Order(orderId, user_id, date, address, city, state, zip , shippingAmount);
             

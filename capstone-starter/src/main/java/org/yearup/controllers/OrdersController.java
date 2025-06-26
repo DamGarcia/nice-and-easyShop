@@ -8,6 +8,8 @@ import org.yearup.models.*;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,7 +34,8 @@ public class OrdersController {
     }
 
     @PostMapping
-    public Order createOrderFromCart(Principal principal){
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public Order createOrder(Principal principal){
         // get user id
         User user = userDao.getByUserName(principal.getName());
         int userId = user.getId();
@@ -54,6 +57,8 @@ public class OrdersController {
         
         // get shopping cart from user
         ShoppingCart cart = shoppingCartDao.getByUserId(userId);
+        List<OrderLineItem> lineItems = new ArrayList<>();
+        
         // loop through shopping cart
         Map<Integer, ShoppingCartItem> items = cart.getItems();
         // each item will create an order line item (using order id and product id)
@@ -65,12 +70,17 @@ public class OrdersController {
             orderLineItem.setQuantity(shoppingCartItem.getQuantity());
             orderLineItem.setDiscount(shoppingCartItem.getDiscountPercent());
             
+            
         // send order line item to orderlineDao to record in db
         orderLineItemDao.create(orderLineItem);
+        lineItems.add(orderLineItem);
         });
+        
+        order.setLineItems(lineItems);
+        
         // when looping is done, clear cart
         shoppingCartDao.delete(userId);
         
-        return orderDao.getByUserId(userId);
+        return order;
     }
 }

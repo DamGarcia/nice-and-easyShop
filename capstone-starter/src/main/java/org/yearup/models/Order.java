@@ -2,6 +2,7 @@ package org.yearup.models;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 public class Order {
     private int orderId;
@@ -12,6 +13,19 @@ public class Order {
     private String state;
     private String zip;
     private BigDecimal shippingAmount;
+    private List<OrderLineItem> lineItems;
+
+    public Order(int orderId, int userId, Date date, String address, String city, String state, String zip, BigDecimal shippingAmount, List<OrderLineItem> lineItems) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.date = date;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.shippingAmount = shippingAmount;
+        this.lineItems = lineItems;
+    }
 
     public Order(int orderId, int userId, Date date, String address, String city, String state, String zip, BigDecimal shippingAmount) {
         this.orderId = orderId;
@@ -23,7 +37,7 @@ public class Order {
         this.zip = zip;
         this.shippingAmount = shippingAmount;
     }
-    
+
     public Order(){
         
     };
@@ -92,6 +106,14 @@ public class Order {
         this.shippingAmount = shippingAmount;
     }
 
+    public List<OrderLineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public void setLineItems(List<OrderLineItem> lineItems) {
+        this.lineItems = lineItems;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Order{");
@@ -103,6 +125,7 @@ public class Order {
         sb.append(", state='").append(state).append('\'');
         sb.append(", zip='").append(zip).append('\'');
         sb.append(", shippingAmount=").append(shippingAmount);
+        sb.append(", items=").append(lineItems);
         sb.append('}');
         return sb.toString();
     }
