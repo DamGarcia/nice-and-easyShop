@@ -83,7 +83,11 @@
 ### 🔐 JWT Authentication Implementation
 *Insert screenshot of JWT configuration code*
 
+<<<<<<< HEAD
 ![JWTAuthentication.png](capstone-starter/src/images/JWTAuthentication.png)
+=======
+![JWTAuthentication.png](src/images/JWTAuthentication.png)
+>>>>>>> e0543a9bad795cf983e7821ee7ee381ba7e05c7d
 
 **Token Processing Method:**
 This method extracts user authentication information from JWT tokens and converts it into Spring Security Authentication objects. It parses the token, verifies it with the signing key, extracts user roles/authorities, and creates an Authentication object that enables role-based access control throughout the application.
@@ -92,26 +96,44 @@ This method extracts user authentication information from JWT tokens and convert
 ### 🛒 Shopping Cart Controller
 *Insert screenshot of shopping cart REST endpoints*
 
+<<<<<<< HEAD
 ![shoppingCartRESTmethods.png](capstone-starter/src/images/shoppingCartRESTmethods.png)
+=======
+![shoppingCartRESTmethods.png](src/images/shoppingCartRESTmethods.png)
+>>>>>>> e0543a9bad795cf983e7821ee7ee381ba7e05c7d
 
 ### 🔧 Bug Fix: Product Search
 *Insert before/after code comparison*
 
 **Before (Buggy Implementation):**
+<<<<<<< HEAD
 ![UpdateProductBUG.png](capstone-starter/src/images/UpdateProductBUG.png)
 
 **After (Fixed Implementation):**
 ![updateProductFIX.png](capstone-starter/src/images/updateProductFIX.png)
+=======
+![UpdateProductBUG.png](src/images/UpdateProductBUG.png)
+
+**After (Fixed Implementation):**
+![updateProductFIX.png](src/images/updateProductFIX.png)
+>>>>>>> e0543a9bad795cf983e7821ee7ee381ba7e05c7d
 
 ---
 
 ## 📹 Feature Demonstrations
 
 ### 🎥 Shopping Cart Functionality
+<<<<<<< HEAD
 [shoppingCartFunctionality.mp4](capstone-starter/src/images/shoppingCartFunctionality.mp4)
 
 ### 🎥 User Profile Management
 [userProfileFunctionality.mp4](capstone-starter/src/images/userProfileFunctionality.mp4)*Insert screenshots of profile view/edit functionality*
+=======
+[shoppingCartFunctionality.mp4](src/images/shoppingCartFunctionality.mp4)
+
+### 🎥 User Profile Management
+[userProfileFunctionality.mp4](src/images/userProfileFunctionality.mp4)*Insert screenshots of profile view/edit functionality*
+>>>>>>> e0543a9bad795cf983e7821ee7ee381ba7e05c7d
 
 ---
 
@@ -174,4 +196,8 @@ mvn spring-boot:run
 
 *Built with ☕ and determination by Damian*
 
+<<<<<<< HEAD
 **"What started as 'nice and easy' became a comprehensive learning journey in backend development!"** 🎓
+=======
+**"What started as 'nice and easy' became a comprehensive learning journey in backend development!"** 🎓
+>>>>>>> e0543a9bad795cf983e7821ee7ee381ba7e05c7d
