@@ -83,42 +83,35 @@
 ### 🔐 JWT Authentication Implementation
 *Insert screenshot of JWT configuration code*
 
-```java
-// JWT Authentication example will be shown here
-```
+![JWTAuthentication.png](images/JWTAuthentication.png)
+
+**Token Processing Method:**
+This method extracts user authentication information from JWT tokens and converts it into Spring Security Authentication objects. It parses the token, verifies it with the signing key, extracts user roles/authorities, and creates an Authentication object that enables role-based access control throughout the application.
+
 
 ### 🛒 Shopping Cart Controller
 *Insert screenshot of shopping cart REST endpoints*
 
-```java
-// Shopping cart controller methods will be displayed here
-```
+![shoppingCartRESTmethods.png](images/shoppingCartRESTmethods.png)
 
 ### 🔧 Bug Fix: Product Search
 *Insert before/after code comparison*
 
 **Before (Buggy Implementation):**
-```java
-// Original problematic code
-```
+![UpdateProductBUG.png](images/UpdateProductBUG.png)
 
 **After (Fixed Implementation):**
-```java
-// Corrected implementation
-```
+![updateProductFIX.png](images/updateProductFIX.png)
 
 ---
 
 ## 📹 Feature Demonstrations
 
 ### 🎥 Shopping Cart Functionality
-*Insert video/GIF showing cart operations*
-
-### 🎥 Checkout Process Flow
-*Insert video/GIF of complete checkout process*
+[shoppingCartFunctionality.mp4](images/shoppingCartFunctionality.mp4)
 
 ### 🎥 User Profile Management
-*Insert screenshots of profile view/edit functionality*
+[userProfileFunctionality.mp4](images/userProfileFunctionality.mp4)*Insert screenshots of profile view/edit functionality*
 
 ---
 
@@ -179,6 +172,6 @@ mvn spring-boot:run
 
 ---
 
-*Built with ☕ and determination by [Your Name]*
+*Built with ☕ and determination by Damian*
 
 **"What started as 'nice and easy' became a comprehensive learning journey in backend development!"** 🎓
