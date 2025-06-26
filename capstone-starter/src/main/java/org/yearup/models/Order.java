@@ -1,7 +1,7 @@
 package org.yearup.models;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 public class Order {
     private int orderId;
@@ -44,7 +44,7 @@ public class Order {
         this.userId = userId;
     }
 
-    public Date getDate() {
+    public java.sql.Date getDate() {
         return date;
     }
 
@@ -94,7 +94,7 @@ public class Order {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Order{");
+        final StringBuilder sb = new StringBuilder("Order{");
         sb.append("orderId=").append(orderId);
         sb.append(", userId=").append(userId);
         sb.append(", date=").append(date);

@@ -108,13 +108,13 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         try{
             int userId = row.getInt("user_id");
             String firstName = row.getString("first_name");
-            String lastname = row.getString(3);
-            String phoneNumber = row.getString(4);
-            String email = row.getString(5);
-            String address = row.getString(6);
-            String city = row.getString(7);
-            String state = row.getString(8);
-            String zip = row.getString(9);
+            String lastname = row.getString("last_name");
+            String phoneNumber = row.getString("phone");
+            String email = row.getString("email");
+            String address = row.getString("address");
+            String city = row.getString("city");
+            String state = row.getString("state");
+            String zip = row.getString("zip");
             
             return new Profile(userId, firstName, lastname, phoneNumber, email, address, city, state, zip);
             

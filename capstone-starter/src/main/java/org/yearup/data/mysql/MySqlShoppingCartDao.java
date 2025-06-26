@@ -123,19 +123,24 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         return shoppingCart;
     }
 
-    // helper methods
-    protected static Product mapRow(ResultSet row) throws SQLException
+    // helper method
+    protected static Product mapRow(ResultSet row)
     {
-        int productId = row.getInt("product_id");
-        String productName = row.getString("name");
-        BigDecimal productPrice = row.getBigDecimal("price");
-        int categoryId = row.getInt("category_id");
-        String description = row.getString("description");
-        String color = row.getString("color");
-        int stock = row.getInt("stock");
-        boolean isFeatured = row.getBoolean("featured");
-        String imageUrl = row.getString("image_url");
-
-        return new Product(productId, productName, productPrice, categoryId, description, color, stock, isFeatured, imageUrl);
+        try{
+            int productId = row.getInt("product_id");
+            String productName = row.getString("name");
+            BigDecimal productPrice = row.getBigDecimal("price");
+            int categoryId = row.getInt("category_id");
+            String description = row.getString("description");
+            String color = row.getString("color");
+            int stock = row.getInt("stock");
+            boolean isFeatured = row.getBoolean("featured");
+            String imageUrl = row.getString("image_url");
+    
+            return new Product(productId, productName, productPrice, categoryId, description, color, stock, isFeatured, imageUrl);
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

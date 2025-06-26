@@ -7,6 +7,6 @@ import org.yearup.models.ShoppingCart;
 public interface OrderDao {
     Order getByUserId(int userId);
     void create(Profile profile, ShoppingCart shoppingCart);
-    void update(int userId, Profile profile); // change to order line item (profile)
+    void update(int userId, Order order);
     Order delete(int userId);
 }
