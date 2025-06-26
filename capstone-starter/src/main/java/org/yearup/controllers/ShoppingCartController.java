@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProductDao;
 import org.yearup.data.ShoppingCartDao;
 import org.yearup.data.UserDao;
+import org.yearup.models.Product;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
 import org.yearup.models.User;
@@ -91,14 +92,16 @@ public class ShoppingCartController
             if (user == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
-            
-            ShoppingCart cart = getCart(principal);
+
+            ShoppingCart cart = shoppingCartDao.getByUserId(user.getId());
             if(cart.contains(productId)){
+                Product product = productDao.getById(productId);
+                item.setProduct(product);
                 shoppingCartDao.update(user.getId(), item);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This item is not in your cart");
             }
-            
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
