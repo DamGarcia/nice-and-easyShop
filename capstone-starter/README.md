@@ -83,7 +83,7 @@
 ### 🔐 JWT Authentication Implementation
 *Insert screenshot of JWT configuration code*
 
-![JWTAuthentication.png](images/JWTAuthentication.png)
+![JWTAuthentication.png](src/images/JWTAuthentication.png)
 
 **Token Processing Method:**
 This method extracts user authentication information from JWT tokens and converts it into Spring Security Authentication objects. It parses the token, verifies it with the signing key, extracts user roles/authorities, and creates an Authentication object that enables role-based access control throughout the application.
@@ -92,26 +92,26 @@ This method extracts user authentication information from JWT tokens and convert
 ### 🛒 Shopping Cart Controller
 *Insert screenshot of shopping cart REST endpoints*
 
-![shoppingCartRESTmethods.png](images/shoppingCartRESTmethods.png)
+![shoppingCartRESTmethods.png](src/images/shoppingCartRESTmethods.png)
 
 ### 🔧 Bug Fix: Product Search
 *Insert before/after code comparison*
 
 **Before (Buggy Implementation):**
-![UpdateProductBUG.png](images/UpdateProductBUG.png)
+![UpdateProductBUG.png](src/images/UpdateProductBUG.png)
 
 **After (Fixed Implementation):**
-![updateProductFIX.png](images/updateProductFIX.png)
+![updateProductFIX.png](src/images/updateProductFIX.png)
 
 ---
 
 ## 📹 Feature Demonstrations
 
 ### 🎥 Shopping Cart Functionality
-[shoppingCartFunctionality.mp4](images/shoppingCartFunctionality.mp4)
+[shoppingCartFunctionality.mp4](src/images/shoppingCartFunctionality.mp4)
 
 ### 🎥 User Profile Management
-[userProfileFunctionality.mp4](images/userProfileFunctionality.mp4)*Insert screenshots of profile view/edit functionality*
+[userProfileFunctionality.mp4](src/images/userProfileFunctionality.mp4)*Insert screenshots of profile view/edit functionality*
 
 ---
 
