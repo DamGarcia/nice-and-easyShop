@@ -36,7 +36,7 @@ public class ShoppingCartController
     }
 
     // each method in this controller requires a Principal object as a parameter
-    @GetMapping("")
+    @GetMapping
     public ShoppingCart getCart(Principal principal)
     {
         try

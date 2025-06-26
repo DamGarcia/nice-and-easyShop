@@ -44,7 +44,7 @@ public class Order {
         this.userId = userId;
     }
 
-    public java.sql.Date getDate() {
+    public Date getDate() {
         return date;
     }
 

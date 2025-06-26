@@ -1,7 +1,6 @@
 package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
-import org.yearup.data.ShoppingCartDao;
 import org.yearup.models.Product;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
@@ -14,45 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDao {
+public class MySqlShoppingCartDao extends MySqlDaoBase implements org.yearup.data.ShoppingCartDao {
 
     public MySqlShoppingCartDao(DataSource dataSource) {
         super(dataSource);
-    }
-
-    @Override
-    public ShoppingCart getByUserId(int userId) {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        
-        String query = """
-                select p.*, sc.*
-                from products p
-                left join shopping_cart sc on p.product_id  = sc.product_id
-                where user_id = ?;
-                """;
-        
-        try(Connection c = getConnection();
-            PreparedStatement s = c.prepareStatement(query))
-        {
-            s.setInt(1, userId);
-
-            ResultSet row = s.executeQuery();
-            
-            while(row.next()){
-                
-                Product product = mapRow(row);
-                ShoppingCartItem item = new ShoppingCartItem();
-                item.setProduct(product);
-                item.setQuantity(row.getInt("quantity"));
-
-                shoppingCart.add(item);
-            }
-            
-            return shoppingCart;
-            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
     
     @Override
@@ -76,7 +40,42 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             throw new RuntimeException(e);
         }
     }
-    
+
+    @Override
+    public ShoppingCart getByUserId(int userId) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        String query = """
+                select p.*, sc.*
+                from products p
+                left join shopping_cart sc on p.product_id  = sc.product_id
+                where user_id = ?;
+                """;
+
+        try(Connection c = getConnection();
+            PreparedStatement s = c.prepareStatement(query))
+        {
+            s.setInt(1, userId);
+
+            ResultSet row = s.executeQuery();
+
+            while(row.next()){
+
+                Product product = mapRow(row);
+                ShoppingCartItem item = new ShoppingCartItem();
+                item.setProduct(product);
+                item.setQuantity(row.getInt("quantity"));
+
+                shoppingCart.add(item);
+            }
+
+            return shoppingCart;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void update(int userId, ShoppingCartItem item) {
         String updateQuery = """

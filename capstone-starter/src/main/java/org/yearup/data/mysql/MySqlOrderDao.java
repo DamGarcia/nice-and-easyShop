@@ -3,10 +3,6 @@ package org.yearup.data.mysql;
 import org.springframework.stereotype.Component;
 import org.yearup.data.OrderDao;
 import org.yearup.models.Order;
-import org.yearup.models.Profile;
-import org.yearup.models.ShoppingCart;
-
-
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -20,17 +16,17 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
     public Order getByUserId(int userId) {
         Order order = new Order();
         String query = """
-                select * from profiles
+                select * from orders
                 where user_id = ?;
                 """;
         
         try(Connection c = getConnection();
-            PreparedStatement s = c.prepareStatement(query);)
+            PreparedStatement s = c.prepareStatement(query))
         {
             s.setInt(1, userId);
             ResultSet row = s.executeQuery();
             while(row.next()){
-                order =  mapRow(row);
+                order = mapRow(row);
             }
 
         } catch (SQLException e) {
@@ -41,22 +37,32 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
     }
 
     @Override
-    public void create(Profile profile, ShoppingCart cart) {
+    public void create(Order order) {
         String insertQuery = """
                 insert into orders (user_id, date, address, city, state, zip, shipping_amount)
                 values (?, CURRENT_TIMESTAMP(), ?, ?, ?, ?, ?)
                 """;
         
         try(Connection c = getConnection();
-        PreparedStatement s = c.prepareStatement(insertQuery))
+        PreparedStatement s = c.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS))
         {
-            s.setInt(1, profile.getUserId());
-            s.setString(2, profile.getAddress());
-            s.setString(3, profile.getCity());
-            s.setString(4, profile.getState());
-            s.setString(5, profile.getZip());
-            s.setBigDecimal(6, cart.getTotal());
+            s.setInt(1, order.getUserId());
+            s.setString(2, order.getAddress());
+            s.setString(3, order.getCity());
+            s.setString(4, order.getState());
+            s.setString(5, order.getZip());
+            s.setBigDecimal(6, order.getShippingAmount());
             
+            
+            int rowsAffected = s.executeUpdate();
+            
+            if(rowsAffected > 0){
+                try(ResultSet key = s.getGeneratedKeys()){
+                    if(key.next()){
+                        order.setOrderId(key.getInt(1));
+                    }
+                }
+            }
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -79,7 +85,7 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
         try(Connection c = getConnection();
         PreparedStatement s = c.prepareStatement(updateQuery))
         {
-            s.setDate(1, order.getDate());
+            s.setString(1, String.valueOf(order.getDate()));
             s.setString(2, order.getAddress());
             s.setString(3, order.getCity());
             s.setString(4, order.getState());
@@ -129,7 +135,6 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
             BigDecimal shippingAmount = row.getBigDecimal("shipping_amount");
             
             return new Order(orderId, user_id, date, address, city, state, zip , shippingAmount);
-                    
             
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,20 +1,26 @@
 package org.yearup.models;
 
+import java.math.BigDecimal;
+
 public class OrderLineItem {
     private int orderLineItemId;
     private int orderId;
     private int productId;
-    private double salesPrice;
+    private BigDecimal salesPrice;
     private int quantity;
-    private double discount;
+    private BigDecimal discount;
 
-    public OrderLineItem(int orderLineItemId, int orderId, int productId, double salesPrice, int quantity, double discount) {
+    public OrderLineItem(int orderLineItemId, int orderId, int productId, BigDecimal salesPrice, int quantity, BigDecimal discount) {
         this.orderLineItemId = orderLineItemId;
         this.orderId = orderId;
         this.productId = productId;
         this.salesPrice = salesPrice;
         this.quantity = quantity;
         this.discount = discount;
+    }
+    
+    public OrderLineItem(){
+        
     }
 
     public int getOrderLineItemId() {
@@ -41,11 +47,11 @@ public class OrderLineItem {
         this.productId = productId;
     }
 
-    public double getSalesPrice() {
+    public BigDecimal getSalesPrice() {
         return salesPrice;
     }
 
-    public void setSalesPrice(double salesPrice) {
+    public void setSalesPrice(BigDecimal salesPrice) {
         this.salesPrice = salesPrice;
     }
 
@@ -57,17 +63,17 @@ public class OrderLineItem {
         this.quantity = quantity;
     }
 
-    public double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("OrderLineItem{");
+        final StringBuilder sb = new StringBuilder("OrderLineItemDao{");
         sb.append("orderLineItemId=").append(orderLineItemId);
         sb.append(", orderId=").append(orderId);
         sb.append(", productId=").append(productId);

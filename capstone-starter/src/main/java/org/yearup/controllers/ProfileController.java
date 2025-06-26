@@ -30,30 +30,34 @@ public class ProfileController {
     // get method
     @GetMapping
     public Profile getprofile(Principal principal){
-//        try{
+        try{
             User user = userDao.getByUserName(principal.getName());
-//            if(user == null){
-//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-//            }
-//
-//
+            if(user == null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+
+
             return profileDao.getByUserId(user.getId());
-//            
-//        } catch (ResponseStatusException e) {
-//            throw new RuntimeException(e);
-//        }
+
+        } catch (ResponseStatusException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     // put method
     @PutMapping
-    public void updateProfile(@RequestBody Profile profile, Principal principal){
+    public Profile updateProfile(@RequestBody Profile profile, Principal principal){
         try{
             User user = userDao.getByUserName(principal.getName());
             if(user == null){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
             
+            profile.setUserId(user.getId());
+            
             profileDao.update(profile);
+            
+            return profileDao.getByUserId(user.getId());
 
         } catch (ResponseStatusException e) {
             throw new RuntimeException(e);

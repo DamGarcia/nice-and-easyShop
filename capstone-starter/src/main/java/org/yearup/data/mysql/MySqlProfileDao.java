@@ -1,6 +1,5 @@
 package org.yearup.data.mysql;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.yearup.models.Profile;
 import org.yearup.data.ProfileDao;
@@ -19,7 +18,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     }
 
     @Override
-    public Profile create(Profile profile)
+    public void create(Profile profile)
     {
         String sql = "INSERT INTO profiles (user_id, first_name, last_name, phone, email, address, city, state, zip) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -39,7 +38,6 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
             ps.executeUpdate();
 
-            return profile;
         }
         catch (SQLException e)
         {
@@ -52,14 +50,18 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         Profile profile = new Profile();
         String query = """
                 select * from profiles
+                where user_id = ?
                 """;
         
         try(Connection c = getConnection();
-        PreparedStatement s = c.prepareStatement(query);
-        ResultSet result = s.executeQuery())
+        PreparedStatement s = c.prepareStatement(query);)
         {
-            while(result.next()){
-                profile = mapRow(result);
+            s.setInt(1, userId);
+            
+            ResultSet row = s.executeQuery();
+            while(row.next()){
+                
+                profile = mapRow(row);
                 
                 }
                 
@@ -97,7 +99,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             s.setString(8, profile.getZip());
             s.setInt(9, profile.getUserId());
             
-            int rowsAffected = s.executeUpdate();
+            s.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
