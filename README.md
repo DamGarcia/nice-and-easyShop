@@ -84,10 +84,6 @@
 *Insert screenshot of JWT configuration code*
 
 ![JWTAuthentication.png](src/images/JWTAuthentication.png)
-<<<<<<< HEAD
->>>>>>> e0543a9 (transferred README file from IntelliJ)
-=======
->>>>>>> f525629 (merge README changes)
 
 **Token Processing Method:**
 This method extracts user authentication information from JWT tokens and converts it into Spring Security Authentication objects. It parses the token, verifies it with the signing key, extracts user roles/authorities, and creates an Authentication object that enables role-based access control throughout the application.
@@ -97,12 +93,8 @@ This method extracts user authentication information from JWT tokens and convert
 *Insert screenshot of shopping cart REST endpoints*
 
 ![shoppingCartRESTmethods.png](capstone-starter/src/images/shoppingCartRESTmethods.png)
-<<<<<<< HEAD
-=======
-![shoppingCartRESTmethods.png](src/images/shoppingCartRESTmethods.png)
->>>>>>> e0543a9 (transferred README file from IntelliJ)
-=======
->>>>>>> f525629 (merge README changes)
+
+
 
 ### 🔧 Bug Fix: Product Search
 *Insert before/after code comparison*
@@ -112,17 +104,6 @@ This method extracts user authentication information from JWT tokens and convert
 
 **After (Fixed Implementation):**
 ![updateProductFIX.png](capstone-starter/src/images/updateProductFIX.png)
-
-=======
-
-![UpdateProductBUG.png](src/images/UpdateProductBUG.png)
-
-**After (Fixed Implementation):**
-![updateProductFIX.png](src/images/updateProductFIX.png)
-<<<<<<< HEAD
->>>>>>> e0543a9 (transferred README file from IntelliJ)
-=======
->>>>>>> f525629 (merge README changes)
 
 ---
 
@@ -138,13 +119,9 @@ This method extracts user authentication information from JWT tokens and convert
 =======
 
 ### 🎥 User Profile Management
-<<<<<<< HEAD
-[userProfileFunctionality.mp4](src/images/userProfileFunctionality.mp4)*Insert screenshots of profile view/edit functionality*
->>>>>>> e0543a9 (transferred README file from IntelliJ)
-=======
+
 [userProfileFunctionality.mp4](src/images/userProfileFunctionality.mp4)
 
->>>>>>> f525629 (merge README changes)
 
 ---
 
@@ -208,10 +185,3 @@ mvn spring-boot:run
 *Built with ☕ and determination by Damian*
 
 **"What started as 'nice and easy' became a comprehensive learning journey in backend development!"** 🎓
-<<<<<<< HEAD
-=======
-**"What started as 'nice and easy' became a comprehensive learning journey in backend development!"** 🎓
->>>>>>> e0543a9 (transferred README file from IntelliJ)
-=======
-
->>>>>>> f525629 (merge README changes)
