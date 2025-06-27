@@ -19,6 +19,7 @@ public class MySqlOrderLineItemDao extends MySqlDaoBase implements OrderLineItem
 
     @Override
     public OrderLineItem getByOrderId(int orderId) {
+        // create a new order line item object so the data from the db can be set to it
         OrderLineItem orderLineItem = new OrderLineItem();
         String query = """
                 select * from order_line_items
@@ -76,11 +77,12 @@ public class MySqlOrderLineItemDao extends MySqlDaoBase implements OrderLineItem
 
     @Override
     public void update(OrderLineItem orderLineItem) {
-
+        // TODO - future functionality
     }
 
     @Override
     public OrderLineItem delete(int orderId) {
+        // TODO - future functionality
         return null;
     }
 

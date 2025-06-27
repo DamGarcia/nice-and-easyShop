@@ -7,25 +7,13 @@ import java.util.List;
 public class Order {
     private int orderId;
     private int userId;
-    private Date date;
+    private Date date; // mySql uses datetime data type - so variable type must be similar for conversion
     private String address;
     private String city;
     private String state;
     private String zip;
-    private BigDecimal shippingAmount;
-    private List<OrderLineItem> lineItems;
-
-    public Order(int orderId, int userId, Date date, String address, String city, String state, String zip, BigDecimal shippingAmount, List<OrderLineItem> lineItems) {
-        this.orderId = orderId;
-        this.userId = userId;
-        this.date = date;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.shippingAmount = shippingAmount;
-        this.lineItems = lineItems;
-    }
+    private BigDecimal shippingAmount; // my Sql uses decimal data type
+    private List<OrderLineItem> lineItems; // each order contains a list of order line items
 
     public Order(int orderId, int userId, Date date, String address, String city, String state, String zip, BigDecimal shippingAmount) {
         this.orderId = orderId;
@@ -38,8 +26,8 @@ public class Order {
         this.shippingAmount = shippingAmount;
     }
 
+    // create a default method to allow for the creation of an empty order that can have its values set later
     public Order(){
-        
     };
 
     public int getOrderId() {

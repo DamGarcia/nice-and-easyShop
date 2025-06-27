@@ -72,8 +72,10 @@ public class ShoppingCartController
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
             
+            // first create the shopping cart for the user
             shoppingCartDao.create(user.getId(), productId);
             
+            // return the shopping cart for the user using the user id
             return shoppingCartDao.getByUserId(user.getId());
 
         } catch (Exception e) {
@@ -93,6 +95,8 @@ public class ShoppingCartController
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
 
+            // retrieve the users cart for update and check if the user has a product in their cart
+            // to update the quantity of the product
             ShoppingCart cart = shoppingCartDao.getByUserId(user.getId());
             if(cart.contains(productId)){
                 Product product = productDao.getById(productId);

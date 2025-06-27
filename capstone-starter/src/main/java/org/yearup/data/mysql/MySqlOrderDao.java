@@ -18,6 +18,7 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
 
     @Override
     public Order getByUserId(int userId) {
+        // creates a new order object to store the users order details from the db
         Order order = new Order();
         String query = """
                 select o.*, oli.*
@@ -91,6 +92,8 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
         try(Connection c = getConnection();
         PreparedStatement s = c.prepareStatement(updateQuery))
         {
+            // the date value cannot be set as a date
+            // so set as string and convert the order date to a string value
             s.setString(1, String.valueOf(order.getDate()));
             s.setString(2, order.getAddress());
             s.setString(3, order.getCity());
@@ -108,6 +111,7 @@ public class MySqlOrderDao extends MySqlDaoBase implements OrderDao {
 
     @Override
     public Order delete(int userId) {
+        // creates a new order object so a user can receive an empty order when deleted
         Order order = new Order();
         String deleteQuery = """
                 delete from orders

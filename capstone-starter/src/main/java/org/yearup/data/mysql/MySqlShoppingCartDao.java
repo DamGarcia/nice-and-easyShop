@@ -22,6 +22,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements org.yearup.dat
     @Override
     public void create(int userId, int productId) {
         
+        // this query works so that when a user adds a new item to their cart
+        // it will auto update its value by 1 if a product is already in the user's cart
         String insertQuery = """
                 insert into shopping_cart (user_id, product_id)
                 values (?, ?)
@@ -60,7 +62,9 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements org.yearup.dat
             ResultSet row = s.executeQuery();
 
             while(row.next()){
-
+                // we want to return a user's cart with the shopping cart item
+                // since we dont receieve a quantity from the user, we have to get the quantity
+                // from the database column
                 Product product = mapRow(row);
                 ShoppingCartItem item = new ShoppingCartItem();
                 item.setProduct(product);
@@ -100,6 +104,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements org.yearup.dat
 
     @Override
     public ShoppingCart delete(int userId) {
+        // this method returns a shopping cart object so the user still receieves a shopping cart after the clear
+        // the cart will simply be empty
         ShoppingCart shoppingCart = new ShoppingCart();
         
         String deleteQuery = """

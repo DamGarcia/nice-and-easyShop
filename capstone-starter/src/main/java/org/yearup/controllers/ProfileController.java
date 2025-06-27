@@ -14,6 +14,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("profile")
+// this annotation only allows activated users to access these methods
 @PreAuthorize("hasRole('ROLE_USER')")
 @CrossOrigin
 public class ProfileController {
@@ -31,12 +32,15 @@ public class ProfileController {
     @GetMapping
     public Profile getprofile(Principal principal){
         try{
+            // create a user object from the user dao get by username
             User user = userDao.getByUserName(principal.getName());
+            
+            // check if the user is null to check if a profile for an existing user exists
             if(user == null){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
-
-
+            
+            // return the user's profile
             return profileDao.getByUserId(user.getId());
 
         } catch (ResponseStatusException e) {
@@ -53,10 +57,13 @@ public class ProfileController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
             
+            // take the profile from the request body and associate it with the current user 
             profile.setUserId(user.getId());
             
+            // pass the profile into the update method
             profileDao.update(profile);
             
+            // return the updated profile
             return profileDao.getByUserId(user.getId());
 
         } catch (ResponseStatusException e) {

@@ -47,6 +47,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
     @Override
     public Profile getByUserId(int userId) {
+        // we return a profile so the user can do something to the object (update/delete)
+        // we find the Profile through the users' id
         Profile profile = new Profile();
         String query = """
                 select * from profiles
@@ -74,6 +76,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     
     @Override
     public void update(Profile profile) {
+        // the user must pass in a profile to be updated
         String query = """
                 update profiles
                 set first_name = ?,

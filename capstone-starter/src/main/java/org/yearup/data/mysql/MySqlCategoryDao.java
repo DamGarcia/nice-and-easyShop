@@ -97,6 +97,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             s.setString(2, category.getDescription());
             
             int rowsAffected = s.executeUpdate();
+            // get generated keys to set the auto incremented value in db
             if(rowsAffected > 0){
                 ResultSet keys = s.getGeneratedKeys();
                 
@@ -159,6 +160,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         }
     }
 
+    // helper method
     private Category mapRow(ResultSet row) throws SQLException
     {
         int categoryId = row.getInt("category_id");
