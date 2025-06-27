@@ -68,42 +68,114 @@
 
 ## 🛠️ Technology Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **Spring Boot** | Backend framework |
+| Technology          | Purpose                        |
+|---------------------|--------------------------------|
+| **Spring Boot**     | Backend framework              |
 | **Spring Security** | Authentication & Authorization |
-| **JWT** | Token-based authentication |
-| **Java** | Primary programming language |
-| **REST API** | Service architecture |
+| **JWT**             | Token-based authentication     |
+| **Java**            | Primary programming language   |
+| **REST API**        | Service architecture           |
 
 ---
 
 ## 📸 Code Snippets & Screenshots
 
 ### 🔐 JWT Authentication Implementation
-*Insert screenshot of JWT configuration code*
 
-![JWTAuthentication.png](src/images/JWTAuthentication.png)
+```java
+public Authentication getAuthentication(String token) {
+    Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+    Collection<? extends GrantedAuthority> authorities =
+            Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+    User principal = new User(claims.getSubject(), "", authorities);
+    return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+}
+```
 
 **Token Processing Method:**
 This method extracts user authentication information from JWT tokens and converts it into Spring Security Authentication objects. It parses the token, verifies it with the signing key, extracts user roles/authorities, and creates an Authentication object that enables role-based access control throughout the application.
 
 
 ### 🛒 Shopping Cart Controller
-*Insert screenshot of shopping cart REST endpoints*
 
-![shoppingCartRESTmethods.png](capstone-starter/src/images/shoppingCartRESTmethods.png)
+```java
+    @PutMapping("/products/{productId}")
+    public void updateCart(Principal principal, @PathVariable int productId, @RequestBody ShoppingCartItem item){
+        try{
+            User user = userDao.getByUserName(principal.getName());
 
+            if (user == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+
+            ShoppingCart cart = shoppingCartDao.getByUserId(user.getId());
+            if(cart.contains(productId)){
+                Product product = productDao.getById(productId);
+                item.setProduct(product);
+                shoppingCartDao.update(user.getId(), item);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This item is not in your cart");
+            }
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
+```
 
 
 ### 🔧 Bug Fix: Product Search
-*Insert before/after code comparison*
 
 **Before (Buggy Implementation):**
-![UpdateProductBUG.png](capstone-starter/src/images/UpdateProductBUG.png)
+
+```java
+    @PutMapping("{id}")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public void updateProduct(@PathVariable int id, @RequestBody Product product)
+{
+    try
+    {
+        productDao.create(product);
+    }
+    catch(Exception ex)
+    {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+    }
+}
+```
+
 
 **After (Fixed Implementation):**
-![updateProductFIX.png](capstone-starter/src/images/updateProductFIX.png)
+
+```java
+   @PutMapping("{id}")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+@ResponseStatus(HttpStatus.NO_CONTENT)
+public void updateProduct(@PathVariable int id, @RequestBody Product product)
+{
+    try
+    {
+        if(id <= 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product ID");
+        }
+        if(productDao.getById(id) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+        }
+
+        productDao.update(id, product);
+    }
+    catch(Exception ex)
+    {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+    }
+}
+```
 
 ---
 
@@ -111,17 +183,10 @@ This method extracts user authentication information from JWT tokens and convert
 
 ### 🎥 Shopping Cart Functionality
 
-[shoppingCartFunctionality.mp4](capstone-starter/src/images/shoppingCartFunctionality.mp4)
+![Shopping Cart Functionality](https://vimeo.com/manage/videos/1096760732/9d35956945)
 
 ### 🎥 User Profile Management
-[userProfileFunctionality.mp4](capstone-starter/src/images/userProfileFunctionality.mp4)
-
-=======
-
-### 🎥 User Profile Management
-
-[userProfileFunctionality.mp4](src/images/userProfileFunctionality.mp4)
-
+![User Profile Management](https://vimeo.com/manage/videos/1096760968/0eeb00f6ae)
 
 ---
 
