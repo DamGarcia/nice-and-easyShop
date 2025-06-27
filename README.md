@@ -182,12 +182,12 @@ public void updateProduct(@PathVariable int id, @RequestBody Product product)
 ## 📹 Feature Demonstrations
 
 ### 🎥 Shopping Cart Functionality
-
 [Shopping Cart Functionality](https://vimeo.com/manage/videos/1096760732/9d35956945)
 
 
 ### 🎥 User Profile Management
 [User Profile Management](https://vimeo.com/manage/videos/1096760968/0eeb00f6ae)
+
 ---
 
 ## 🧪 Testing & Quality Assurance
